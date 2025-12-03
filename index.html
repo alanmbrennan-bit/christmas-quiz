@@ -326,13 +326,11 @@
     <div id="palma-title">🎉 SURPRISE! 🎉</div>
     <div id="palma-subtitle">🌴✈️ We’re off to Palma in July! 🌴✈️</div>
     <div id="palma-details">
-     💛 Happy Christmas! 💛
+      Happy Christmas!  💛
     </div>
-    <button id="palma-close">OK, AMAZING! 😎</button>
+    <button id="palma-close">😎</button>
   </div>
  
-
-
 <script>
   /* ----------------- QUIZ LOGIC ----------------- */
   const questions = [
@@ -346,34 +344,6 @@
     { q: "When will Ciara be a qualified vet?", options: ["August 2029", "February 2027", "September 2030"], correct: 1 },
     { q: "What is the best thing ever in the house?", options: ["Qettle", "Shoebox under the stairs", "Mrs Doyle"], correct: 1 }
   ];
- 
-
- 
-    // Extra sample questions – you can edit / add up to 20 total
-    { q: "What colour are traditional Christmas trees?", options: ["Blue", "Green", "Purple"], correct: 1 },
-    { q: "What food is often left out for Santa?", options: ["Burger and chips", "Carrots and mince pies", "Sushi"], correct: 1 },
-    { q: "What do we pull at the Christmas table?", options: ["Christmas crackers", "Christmas ropes", "Christmas strings"], correct: 0 },
-    { q: "Which of these is a Christmas song?", options: ["Jingle Bells", "Summer Salsa", "Rainy Days"], correct: 0 },
-    { q: "What do we often put under the Christmas tree?", options: ["Pebbles", "Presents", "Flowers"], correct: 1 },
-    { q: "Which of these is a famous reindeer?", options: ["Bouncer", "Dasher", "Sprinter"], correct: 1 },
-    { q: "What does Santa come down to deliver presents?", options: ["The window", "The chimney", "The letterbox"], correct: 1 },
-    { q: "What drink is often left out for Santa?", options: ["Milk", "Orange juice", "Hot chocolate"], correct: 0 },
-    { q: "What do people sometimes kiss under at Christmas?", options: ["Pine tree", "Mistletoe", "Lamp post"], correct: 1 }
-    // You can add up to 20 total questions here
-  ];
- 
-  // Shuffle helper (Fisher–Yates)
-  function shuffle(array) {
-    const arr = array.slice();
-    for (let i = arr.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [arr[i], arr[j]] = [arr[j], arr[i]];
-    }
-    return arr;
-  }
- 
-  // Select 9 random questions from the bank
-  const questions = shuffle(questionBank).slice(0, 9);
  
   let currentIndex = 0;
   let remainingTiles = [0,1,2,3,4,5,6,7,8];
@@ -454,7 +424,7 @@
  
     if (selectedIndex === q.correct) {
       lock = true;
-      statusEl.textContent = "Correct! A present disappears… 🎁";
+      statusEl.textContent = "Correct!🎁";
       revealRandomTile();
     } else {
       statusEl.textContent = "Not quite, try again! ⛄";
