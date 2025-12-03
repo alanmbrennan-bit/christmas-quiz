@@ -8,9 +8,7 @@
     :root {
       --max-content-width: 480px;
     }
- 
     * { box-sizing: border-box; }
- 
     body {
       font-family: Arial, sans-serif;
       display: flex;
@@ -23,7 +21,6 @@
       overflow-x: hidden;
       min-height: 100vh;
     }
- 
     h1 {
       margin: 0;
       text-align: center;
@@ -32,7 +29,6 @@
       max-width: var(--max-content-width);
       z-index: 1;
     }
- 
     /* Falling snow overlay */
     body::before {
       content: "";
@@ -48,12 +44,10 @@
       opacity: 0.5;
       z-index: -1;
     }
- 
     @keyframes snow-drift {
       0% { transform: translateY(-20px); }
       100% { transform: translateY(20px); }
     }
- 
     /* IMAGE + GRID */
     .image-wrapper {
       position: relative;
@@ -67,14 +61,12 @@
       box-shadow: 0 0 25px rgba(0,0,0,0.7);
       z-index: 1;
     }
- 
     .image-wrapper img {
       width: 100%;
       height: auto;
       object-fit: contain;
       display: block;
     }
- 
     .overlay-grid {
       position: absolute;
       inset: 0;
@@ -83,7 +75,6 @@
       grid-template-rows: repeat(3, 1fr);
       z-index: 3;
     }
- 
     /* CHRISTMAS PRESENT TILES */
     .tile {
       position: relative;
@@ -93,14 +84,12 @@
       box-shadow: inset 0 0 0 2px rgba(255,255,255,0.15);
     }
     .tile.hidden { visibility: hidden; }
- 
     .tile::before,
     .tile::after {
       content: "";
       position: absolute;
       pointer-events: none;
     }
- 
     .tile::before {
       width: 22%;
       left: 39%;
@@ -115,7 +104,6 @@
           #ffd700e6 6px
         );
     }
- 
     .tile::after {
       height: 22%;
       top: 39%;
@@ -130,7 +118,6 @@
           #ffd700e6 6px
         );
     }
- 
     .overlay-grid::before {
       content: "";
       position: absolute;
@@ -144,7 +131,6 @@
         0 0 14px 5px yellow,
         0 0 18px 6px cyan;
     }
- 
     @keyframes lights {
       50% {
         box-shadow:
@@ -154,7 +140,6 @@
           0 0 22px 7px yellow;
       }
     }
- 
     /* QUIZ */
     .question-box {
       width: 100%;
@@ -166,18 +151,15 @@
       box-shadow: 0 0 18px rgba(0,0,0,0.8);
       z-index: 1;
     }
- 
     .question-box h2 {
       text-align: center;
       margin: 0 0 6px;
     }
- 
     .answer-buttons {
       display: flex;
       flex-direction: column;
       gap: 8px;
     }
- 
     button {
       padding: 10px;
       border-radius: 6px;
@@ -187,18 +169,15 @@
       cursor: pointer;
       font-size: 1rem;
     }
- 
     #skip-btn {
       background: linear-gradient(135deg, #555, #777);
       margin-top: 10px;
     }
- 
     .status {
       margin-top: 8px;
       text-align: center;
       min-height: 1.2em;
     }
- 
     /* Snowflake burst */
     .flake {
       position: absolute;
@@ -207,98 +186,93 @@
       pointer-events: none;
       z-index: 999;
     }
- 
     @keyframes drift {
       from { opacity: 1; transform: translate(0,0) scale(0.8); }
       to   { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(1.6) rotate(360deg); }
     }
- 
-    /* FULL-SCREEN PALMA MESSAGE */
+    /* PALMA MESSAGE INSIDE PHOTO */
     #palma-overlay {
-      position: fixed;
+      position: absolute;
       inset: 0;
-      background: radial-gradient(circle at top, #ffecd2 0%, #fcb69f 20%, #ff512f 60%, #dd2476 100%);
       display: none;
       align-items: center;
       justify-content: center;
       flex-direction: column;
       text-align: center;
       padding: 20px;
-      z-index: 2000;
-      color: #fff;
-      overflow: hidden;
+      z-index: 4;
+      background: radial-gradient(circle at center,
+        rgba(0,0,0,0.1) 0%,
+        rgba(0,0,0,0.45) 50%,
+        rgba(0,0,0,0.7) 100%);
     }
- 
     #palma-overlay.show {
       display: flex;
       animation: overlay-pop 0.8s ease-out;
     }
- 
     @keyframes overlay-pop {
       0% { opacity: 0; transform: scale(0.8); }
       60% { opacity: 1; transform: scale(1.05); }
       100% { opacity: 1; transform: scale(1); }
     }
- 
     #palma-title {
-      font-size: 2.4rem;
+      font-size: 2rem;
       margin-bottom: 10px;
-      text-shadow: 0 0 12px rgba(0,0,0,0.5);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      animation: neon 1.5s ease-in-out infinite alternate;
     }
- 
     #palma-subtitle {
-      font-size: 1.5rem;
-      margin-bottom: 18px;
-      text-shadow: 0 0 10px rgba(0,0,0,0.4);
+      font-size: 1.4rem;
+      animation: neon-soft 1.5s ease-in-out infinite alternate;
     }
- 
-    #palma-details {
-      font-size: 1.1rem;
-      max-width: 480px;
-      margin-bottom: 24px;
-    }
- 
-    #palma-overlay button {
+    #palma-details { display: none; }
+    #palma-close {
+      margin-top: 14px;
       width: auto;
-      padding: 12px 22px;
+      padding: 10px 18px;
       font-size: 1rem;
       border-radius: 999px;
       background: #0e9b4b;
       border: 2px solid #fff;
-      box-shadow: 0 0 12px rgba(0,0,0,0.5);
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
     }
- 
-    /* Confetti dots background */
-    #palma-overlay::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      background-image:
-        radial-gradient(circle, rgba(255,255,255,0.7) 0, rgba(255,255,255,0) 55%),
-        radial-gradient(circle, rgba(255,255,0,0.6) 0, rgba(255,255,0,0) 55%),
-        radial-gradient(circle, rgba(0,255,255,0.6) 0, rgba(0,255,255,0) 55%),
-        radial-gradient(circle, rgba(255,0,255,0.6) 0, rgba(255,0,255,0) 55%);
-      background-size: 4px 4px, 5px 5px, 4px 4px, 5px 5px;
-      background-position: 0 0, 40px 80px, 80px 40px, 120px 20px;
-      animation: snow-drift 14s linear infinite;
-      opacity: 0.7;
-      z-index: -1;
+    @keyframes neon {
+      0% {
+        color: #fffbd1;
+        text-shadow:
+          0 0 6px #fffbd1,
+          0 0 14px #ffd700,
+          0 0 24px #ff6b6b;
+      }
+      100% {
+        color: #ffe4ff;
+        text-shadow:
+          0 0 8px #ffe4ff,
+          0 0 18px #ff00ff,
+          0 0 30px #ff00ff;
+      }
     }
- 
+    @keyframes neon-soft {
+      0% {
+        color: #ffffff;
+        text-shadow: 0 0 4px #ffffff, 0 0 8px #00e5ff;
+      }
+      100% {
+        color: #e3ffff;
+        text-shadow: 0 0 6px #e3ffff, 0 0 12px #00ffaa;
+      }
+    }
     @media (max-width: 600px) {
       h1 { font-size: 1.4rem; }
       .flake { font-size: 40px; }
-      #palma-title { font-size: 2rem; }
-      #palma-subtitle { font-size: 1.25rem; }
-      #palma-details { font-size: 1rem; }
+      #palma-title { font-size: 1.7rem; }
+      #palma-subtitle { font-size: 1.3rem; }
     }
   </style>
 </head>
 <body>
- 
   <h1>Christmas Picture Quiz 🎄</h1>
- 
   <div class="image-wrapper">
     <img src="family-picture.jpg" alt="Family Picture" />
     <div class="overlay-grid">
@@ -312,153 +286,122 @@
       <div class="tile" data-index="7"></div>
       <div class="tile" data-index="8"></div>
     </div>
+    <div id="palma-overlay">
+      <div id="palma-title">Palma, July 2026</div>
+      <div id="palma-subtitle">here we come</div>
+      <button id="palma-close">😎</button>
+    </div>
   </div>
- 
   <div class="question-box">
     <h2 id="question-text"></h2>
     <div class="answer-buttons" id="answers"></div>
     <button id="skip-btn">Skip Question 🎁</button>
     <div class="status" id="status"></div>
   </div>
- 
-  <!-- Full-screen Palma reveal -->
-  <div id="palma-overlay">
-    <div id="palma-title">🎉 SURPRISE! 🎉</div>
-    <div id="palma-subtitle">🌴✈️ We’re off to Palma in July! 🌴✈️</div>
-    <div id="palma-details">
-      Happy Christmas!  💛
-    </div>
-    <button id="palma-close">😎</button>
-  </div>
- 
-<script>
-  /* ----------------- QUIZ LOGIC ----------------- */
-  const questions = [
-    { q: "What date is Lucy's birthday?", options: ["1st August", "10th October", "6th July"], correct: 0 },
-    { q: "What makes DJ go to bed?", options: ["Right lads...", "Jumping jezebels...", "Shut the front door..."], correct: 0 },
-    { q: "What colour is mam's fleece?", options: ["Pink", "Pale Blue", "Orange"], correct: 1 },
-    { q: "Where does the sun always shine?", options: ["Kilkenny", "Waterford", "Kerry"], correct: 0 },
-    { q: "What's the name of the pub in the shed?", options: ["The Doghouse", "The Winchester", "The Queen Vic"], correct: 1 },
-    { q: "How many strings on Lucy's harp?", options: ["6", "34", "12"], correct: 1 },
-    { q: "Who is the best band ever?", options: ["Beatles", "Oasis", "ABBA"], correct: 0 },
-    { q: "When will Ciara be a qualified vet?", options: ["August 2029", "February 2027", "September 2030"], correct: 1 },
-    { q: "What is Dad's favourite thing ever in the house?", options: ["Qettle", "Shoebox under the stairs", "Mrs Doyle"], correct: 1 }
-  ];
- 
-  let currentIndex = 0;
-  let remainingTiles = [0,1,2,3,4,5,6,7,8];
-  let lock = false;
- 
-  const questionText = document.getElementById("question-text");
-  const answersDiv = document.getElementById("answers");
-  const skipBtn = document.getElementById("skip-btn");
-  const statusEl = document.getElementById("status");
-  const palmaOverlay = document.getElementById("palma-overlay");
-  const palmaClose = document.getElementById("palma-close");
- 
-  function loadQuestion(i) {
-    lock = false;
- 
-    if (i >= questions.length) {
-      // All questions done → trigger big Palma overlay
-      showPalmaOverlay();
-      questionText.textContent = "All questions complete!";
+  <script>
+    /* ----------------- QUIZ LOGIC ----------------- */
+    const questions = [
+      { q: "What date is Lucy's birthday?", options: ["1st August", "10th October", "6th July"], correct: 0 },
+      { q: "What makes DJ go to bed?", options: ["Right lads...", "Jumping jezebels...", "Shut the front door..."], correct: 0 },
+      { q: "What colour is mam's fleece?", options: ["Pink", "Pale Blue", "Orange"], correct: 1 },
+      { q: "Where does the sun always shine?", options: ["Kilkenny", "Waterford", "Kerry"], correct: 0 },
+      { q: "What's the name of the pub in the shed?", options: ["The Doghouse", "The Winchester", "The Queen Vic"], correct: 1 },
+      { q: "How many strings on Lucy's harp?", options: ["6", "34", "12"], correct: 1 },
+      { q: "Who is the best band ever?", options: ["Beatles", "Oasis", "ABBA"], correct: 0 },
+      { q: "When will Ciara be a qualified vet?", options: ["August 2029", "February 2027", "September 2030"], correct: 1 },
+      { q: "What is Dad's favourite thing ever in the house?", options: ["Qettle", "Shoebox under the stairs", "Mrs Doyle"], correct: 1 }
+    ];
+    let currentIndex = 0;
+    let remainingTiles = [0,1,2,3,4,5,6,7,8];
+    let lock = false;
+    const questionText = document.getElementById("question-text");
+    const answersDiv = document.getElementById("answers");
+    const skipBtn = document.getElementById("skip-btn");
+    const statusEl = document.getElementById("status");
+    const palmaOverlay = document.getElementById("palma-overlay");
+    const palmaClose = document.getElementById("palma-close");
+    function loadQuestion(i) {
+      lock = false;
+      if (i >= questions.length) {
+        showPalmaOverlay();
+        questionText.textContent = "All questions complete!";
+        answersDiv.innerHTML = "";
+        skipBtn.style.display = "none";
+        return;
+      }
+      const q = questions[i];
+      questionText.textContent = q.q;
       answersDiv.innerHTML = "";
-      skipBtn.style.display = "none";
-      return;
+      q.options.forEach((opt, index) => {
+        const btn = document.createElement("button");
+        btn.textContent = opt;
+        btn.onclick = () => checkAnswer(index);
+        answersDiv.appendChild(btn);
+      });
+      statusEl.textContent = "";
     }
- 
-    const q = questions[i];
-    questionText.textContent = q.q;
-    answersDiv.innerHTML = "";
- 
-    q.options.forEach((opt, index) => {
-      const btn = document.createElement("button");
-      btn.textContent = opt;
-      btn.onclick = () => checkAnswer(index);
-      answersDiv.appendChild(btn);
-    });
- 
-    statusEl.textContent = "";
-  }
- 
-  function spawnSnowburst(tile) {
-    const rect = tile.getBoundingClientRect();
-    const cx = rect.left + rect.width/2;
-    const cy = rect.top + rect.height/2 + window.scrollY;
- 
-    for (let i=0; i<40; i++){
-      const f = document.createElement("div");
-      f.className = "flake";
-      f.textContent = "❄️";
-      f.style.left = cx + "px";
-      f.style.top = cy + "px";
- 
-      const dx = (Math.random()*600 - 300) + "px";
-      const dy = (Math.random()*-600) + "px";
- 
-      f.style.setProperty("--dx", dx);
-      f.style.setProperty("--dy", dy);
- 
-      document.body.appendChild(f);
-      setTimeout(() => f.remove(), 5000);
+    function spawnSnowburst(tile) {
+      const rect = tile.getBoundingClientRect();
+      const cx = rect.left + rect.width/2;
+      const cy = rect.top + rect.height/2 + window.scrollY;
+      for (let i=0; i<40; i++){
+        const f = document.createElement("div");
+        f.className = "flake";
+        f.textContent = "❄️";
+        f.style.left = cx + "px";
+        f.style.top = cy + "px";
+        const dx = (Math.random()*600 - 300) + "px";
+        const dy = (Math.random()*-600) + "px";
+        f.style.setProperty("--dx", dx);
+        f.style.setProperty("--dy", dy);
+        document.body.appendChild(f);
+        setTimeout(() => f.remove(), 5000);
+      }
     }
-  }
- 
-  function revealRandomTile() {
-    if (remainingTiles.length === 0) return;
-    const r = Math.floor(Math.random() * remainingTiles.length);
-    const tileIndex = remainingTiles[r];
-    const tile = document.querySelector('.tile[data-index="' + tileIndex + '"]');
- 
-    tile.classList.add("hidden");
-    spawnSnowburst(tile);
- 
-    remainingTiles.splice(r,1);
-  }
- 
-  function checkAnswer(selectedIndex) {
-    if (lock) return;
- 
-    const q = questions[currentIndex];
- 
-    if (selectedIndex === q.correct) {
-      lock = true;
-      statusEl.textContent = "Correct!🎁";
-      revealRandomTile();
-    } else {
-      statusEl.textContent = "Not quite, try again! ⛄";
-      return;
+    function revealRandomTile() {
+      if (remainingTiles.length === 0) return;
+      const r = Math.floor(Math.random() * remainingTiles.length);
+      const tileIndex = remainingTiles[r];
+      const tile = document.querySelector('.tile[data-index="' + tileIndex + '"]');
+      tile.classList.add("hidden");
+      spawnSnowburst(tile);
+      remainingTiles.splice(r,1);
+      if (remainingTiles.length === 0) {
+        showPalmaOverlay();
+      }
     }
- 
-    currentIndex++;
-    setTimeout(() => loadQuestion(currentIndex), 900);
-  }
- 
-  skipBtn.onclick = () => {
-    if (lock) return;
-    statusEl.textContent = "Question skipped. No present opened.";
-    currentIndex++;
-    setTimeout(() => loadQuestion(currentIndex), 700);
-  };
- 
-  function showPalmaOverlay() {
-    palmaOverlay.classList.add("show");
-  }
- 
-  palmaClose.addEventListener("click", () => {
-    palmaOverlay.classList.remove("show");
-  });
- 
-  // Close overlay if they tap the background
-  palmaOverlay.addEventListener("click", (e) => {
-    if (e.target === palmaOverlay) {
+    function checkAnswer(selectedIndex) {
+      if (lock) return;
+      const q = questions[currentIndex];
+      if (selectedIndex === q.correct) {
+        lock = true;
+        statusEl.textContent = "Correct!🎁";
+        revealRandomTile();
+      } else {
+        statusEl.textContent = "Not quite, try again! ⛄";
+        return;
+      }
+      currentIndex++;
+      setTimeout(() => loadQuestion(currentIndex), 900);
+    }
+    skipBtn.onclick = () => {
+      if (lock) return;
+      statusEl.textContent = "Question skipped. No present opened.";
+      currentIndex++;
+      setTimeout(() => loadQuestion(currentIndex), 700);
+    };
+    function showPalmaOverlay() {
+      palmaOverlay.classList.add("show");
+    }
+    palmaClose.addEventListener("click", () => {
       palmaOverlay.classList.remove("show");
-    }
-  });
- 
-  loadQuestion(currentIndex);
-</script>
- 
+    });
+    palmaOverlay.addEventListener("click", (e) => {
+      if (e.target === palmaOverlay) {
+        palmaOverlay.classList.remove("show");
+      }
+    });
+    loadQuestion(currentIndex);
+  </script>
 </body>
 </html>
