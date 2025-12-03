@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Christmas 3x3 Reveal Quiz</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --max-content-width: 480px;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      padding: 16px;
+      background: radial-gradient(circle at top, #1b2440 0%, #050814 45%, #020309 100%);
+      color: #fff;
+      overflow-x: hidden;
+      box-sizing: border-box;
+    }
+
+    * {
+      box-sizing: inherit;
+    }
+
+    h1 {
+      margin: 0;
+      text-align: center;
+      text-shadow: 0 0 8px rgba(255,255,255,0.5);
+      font-size: 1.7rem;
+      max-width: var(--max-content-width);
+    }
+
+    /* Subtle falling snow overlay */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        radial-gradient(circle, rgba(255,255,255,0.7) 0, rgba(255,255,255,0) 55%),
+        radial-gradient(circle, rgba(255,255,255,0.6) 0, rgba(255,255,255,0) 55%),
+        radial-gradient(circle, rgba(255,255,255,0.3) 0, rgba(255,255,255,0) 55%);
+      background-size: 3px 3px, 4px 4px, 2px 2px;
+      background-position: 0 0, 40px 80px, 80px 40px;
+      animation: snow-drift 20s linear infinite;
+      opacity: 0.5;
+      z-index: -1;
+    }
+
+    @keyframes snow-drift {
+      0% { transform: translateY(-20px); }
+      100% { transform: translateY(20px); }
+    }
+
+    .image-wrapper {
+      position: relative;
+      display: inline-block;
+      border-radius: 16px;
+      border: 3px solid #f5f5f5;
+      overflow: hidden;
+      background: #000;
+      box-shadow: 0 0 25px rgba(0,0,0,0.7);
+      perspective: 800px;
+      width: 100%;
+      max-width: var(--max-content-width);
+    }
+
+    .image-wrapper img {
+      display: block;
+      width: 100%;
+      height: auto;          /* keep full image */
+      object-fit: contain;   /* show entire photo (no cropping) */
+      background: #000;
+    }
+
+    .overlay-grid {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      z-index: 2;
+    }
+
+    /* CHRISTMAS PRESENT TILES */
+    .tile {
+      position: relative;
+      background: linear-gradient(135deg, #c41e3a, #8b0000);
+      opacity: 0.98;
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.15);
+      overflow: hidden;
+    }
+
+    /* A tile is “revealed” by hiding it */
+    .tile.hidden {
+      visibility: hidden;
+    }
+
+    /* Ribbons */
+    .tile::before,
+    .tile::after {
+      content: "";
+      position: absolute;
+      pointer-events: none;
+      background-repeat: no-repeat;
+    }
+
+    .tile::before {
+      /* vertical ribbon */
+      width: 22%;
+      left: 39%;
+      top: 0;
+      bottom: 0;
+      background:
+        repeating-linear-gradient(
+          to bottom,
+          rgba(255,255,255,0.8) 0,
+          rgba(255,255,255,0.8) 3px,
+          rgba(255,215,0,0.9) 3px,
+          rgba(255,215,0,0.9) 6px
+        );
+    }
+
+    .tile::after {
+      /* horizontal ribbon */
+      height: 22%;
+      top: 39%;
+      left: 0;
+      right: 0;
+      background:
+        repeating-linear-gradient(
+          to right,
+          rgba(255,255,255,0.8) 0,
+          rgba(255,255,255,0.8) 3px,
+          rgba(255,215,0,0.9) 3px,
+          rgba(255,215,0,0.9) 6px
+        );
+    }
+
+    /* Light garland around the grid */
+    .overlay-grid::before {
+      content: "";
+      position: absolute;
+      inset: 4px;
+      pointer-events: none;
+      border-radius: 18px;
+      border: 2px dashed transparent;
+      box-shadow:
+        0 0 6px 2px rgba(255, 0, 0, 0.9),
+        0 0 10px 4px rgba(0, 255, 0, 0.8),
+        0 0 14px 5px rgba(255, 255, 0, 0.8),
+        0 0 18px 6px rgba(0, 191, 255, 0.8);
+      animation: christmas-lights 2s linear infinite alternate;
+    }
+
+    @keyframes christmas-lights {
+      0% {
+        box-shadow:
+          0 0 8px 2px rgba(255, 0, 0, 0.9),
+          0 0 12px 4px rgba(0, 255, 0, 0.6),
+          0 0 14px 5px rgba(255, 255, 0, 0.5),
+          0 0 18px 6px rgba(0, 191, 255, 0.3);
+      }
+      50% {
+        box-shadow:
+          0 0 8px 2px rgba(0, 191, 255, 0.9),
+          0 0 12px 4px rgba(255, 0, 0, 0.7),
+          0 0 16px 5px rgba(50, 205, 50, 0.9),
+          0 0 22px 7px rgba(255, 255, 0, 0.7);
+      }
+      100% {
+        box-shadow:
+          0 0 10px 2px rgba(255, 255, 0, 0.9),
+          0 0 16px 4px rgba(255, 0, 255, 0.8),
+          0 0 20px 6px rgba(0, 255, 255, 0.9),
+          0 0 26px 8px rgba(255, 69, 0, 0.9);
+      }
+    }
+
+    .question-box {
+      width: 100%;
+      max-width: var(--max-content-width);
+      border: 1px solid rgba(255,255,255,0.4);
+      padding: 14px;
+      border-radius: 12px;
+      background: rgba(10, 10, 25, 0.85);
+      box-shadow: 0 0 18px rgba(0,0,0,0.8);
+    }
+
+    .question-box h2 {
+      margin-top: 0;
+      font-size: 1.05rem;
+      text-align: center;
+    }
+
+    .answer-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    button {
+      padding: 10px;
+      cursor: pointer;
+      width: 100%;
+      border-radius: 6px;
+      border: 1px solid #f0f0f0;
+      background: linear-gradient(135deg, #145214, #1e7c1e);
+      color: #fff;
+      font-size: 1rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+      transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.2s;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.6);
+      background: linear-gradient(135deg, #1e7c1e, #27a327);
+    }
+
+    #skip-btn {
+      margin-top: 10px;
+      background: linear-gradient(135deg, #555, #777);
+    }
+
+    #skip-btn:hover {
+      background: linear-gradient(135deg, #777, #999);
+    }
+
+    .status {
+      margin-top: 8px;
+      min-height: 1.2em;
+      font-size: 0.95rem;
+      text-align: center;
+    }
+
+    .correct { color: #7CFC00; }
+    .incorrect { color: #ff6b6b; }
+    .skipped { color: #ddd; }
+
+    /* GIANT SNOWFLAKES */
+    .flake {
+      position: absolute;
+      font-size: 60px; /* base size for desktop */
+      pointer-events: none;
+      animation: drift 5s linear forwards;
+      z-index: 5;
+    }
+
+    @keyframes drift {
+      from {
+        opacity: 1;
+        transform: translate(0, 0) scale(0.8) rotate(0deg);
+      }
+      to {
+        opacity: 0;
+        transform:
+          translate(var(--dx), var(--dy))
+          scale(1.6)
+          rotate(360deg);
+      }
+    }
+
+    /* 📱 Mobile tweaks */
+    @media (max-width: 600px) {
+      body {
+        padding: 12px;
+        gap: 14px;
+      }
+
+      h1 {
+        font-size: 1.4rem;
+      }
+
+      .question-box h2 {
+        font-size: 1rem;
+      }
+
+      button {
+        font-size: 0.95rem;
+        padding: 9px;
+      }
+
+      .status {
+        font-size: 0.9rem;
+      }
+
+      .flake {
+        font-size: 40px;  /* slightly smaller flakes on tiny screens */
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Christmas Picture Quiz 🎄</h1>
+
+  <div class="image-wrapper">
+    <!-- Make sure this matches your real file name -->
+    <img src="family-picture.jpg" alt="Christmas Picture" />
+    <div class="overlay-grid">
+      <div class="tile" data-index="0"></div>
+      <div class="tile" data-index="1"></div>
+      <div class="tile" data-index="2"></div>
+      <div class="tile" data-index="3"></div>
+      <div class="tile" data-index="4"></div>
+      <div class="tile" data-index="5"></div>
+      <div class="tile" data-index="6"></div>
+      <div class="tile" data-index="7"></div>
+      <div class="tile" data-index="8"></div>
+    </div>
+  </div>
+
+  <div class="question-box">
+    <h2 id="question-text"></h2>
+    <div class="answer-buttons" id="answers"></div>
+    <button id="skip-btn">Skip Question 🎁</button>
+    <div class="status" id="status"></div>
+  </div>
+
+  <script>
+    // === CHRISTMAS-THEMED MULTIPLE CHOICE QUESTIONS ===
+    const questions = [
+      { q: "What date is Christmas Day?", options: ["24th December", "25th December", "26th December"], correct: 1 },
+      { q: "Which animal pulls Santa's sleigh?", options: ["Reindeer", "Horses", "Camels"], correct: 0 },
+      { q: "What colour is Santa's suit?", options: ["Blue", "Red", "Green"], correct: 1 },
+      { q: "Which plant is often hung in doorways at Christmas?", options: ["Mistletoe", "Sunflower", "Cactus"], correct: 0 },
+      { q: "What do we usually put on top of the Christmas tree?", options: ["Pumpkin", "Star or Angel", "Football"], correct: 1 },
+      { q: "Which month is Christmas in?", options: ["November", "December", "January"], correct: 1 },
+      { q: "What do children hang up for Santa to fill?", options: ["Stockings", "Gloves", "Shoes"], correct: 0 },
+      { q: "Where does Santa traditionally live?", options: ["The Moon", "North Pole", "The Desert"], correct: 1 },
+      { q: "What do people usually give each other at Christmas?", options: ["Rocks", "Presents", "Homework"], correct: 1 }
+    ];
+
+    let currentIndex = 0;
+    let remainingTiles = [0,1,2,3,4,5,6,7,8];
+    let lockingReveal = false; // prevent double-reveal per question
+
+    const questionText = document.getElementById("question-text");
+    const answersDiv = document.getElementById("answers");
+    const skipBtn = document.getElementById("skip-btn");
+    const statusEl = document.getElementById("status");
+
+    function loadQuestion(i) {
+      lockingReveal = false; // allow reveal for this question
+
+      if (i >= questions.length) {
+        questionText.textContent = "We're off to Palma in July! Merry Christmas! 🎅🎄";
+        answersDiv.innerHTML = "";
+        skipBtn.style.display = "none";
+        return;
+      }
+
+      const q = questions[i];
+      questionText.textContent = q.q;
+
+      // clear previous answers
+      answersDiv.innerHTML = "";
+
+      // add three answer buttons
+      q.options.forEach((opt, index) => {
+        const btn = document.createElement("button");
+        btn.textContent = opt;
+        btn.onclick = () => checkAnswer(index);
+        answersDiv.appendChild(btn);
+      });
+
+      statusEl.textContent = "";
+      statusEl.className = "status";
+    }
+
+    function spawnSnowburstForTile(tile) {
+      const rect = tile.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2 + window.scrollY;
+
+      const flakeCount = 40; // lots of big flakes
+
+      for (let i = 0; i < flakeCount; i++) {
+        const f = document.createElement("div");
+        f.className = "flake";
+        f.textContent = "❄️";
+
+        f.style.left = centerX + "px";
+        f.style.top = centerY + "px";
+
+        const dx = (Math.random() * 600 - 300) + "px"; // left/right spread
+        const dy = (Math.random() * -600) + "px";      // upward spread
+
+        f.style.setProperty("--dx", dx);
+        f.style.setProperty("--dy", dy);
+
+        document.body.appendChild(f);
+
+        setTimeout(() => f.remove(), 5000);
+      }
+    }
+
+    function revealRandomTile() {
+      if (remainingTiles.length === 0) return;
+      const r = Math.floor(Math.random() * remainingTiles.length);
+      const tileIndex = remainingTiles[r];
+
+      const selector = '.tile[data-index="' + tileIndex + '"]';
+      const tile = document.querySelector(selector);
+      if (!tile) return;
+
+      // hide tile (permanent reveal) and spawn snow
+      tile.classList.add("hidden");
+      spawnSnowburstForTile(tile);
+
+      remainingTiles.splice(r, 1);
+    }
+
+    function checkAnswer(selectedIndex) {
+      if (lockingReveal) return; // prevent multiple reveals for same question
+
+      const q = questions[currentIndex];
+
+      if (selectedIndex === q.correct) {
+        lockingReveal = true;
+        statusEl.textContent = "Correct! A present disappears… 🎁";
+        statusEl.className = "status correct";
+        revealRandomTile();
+      } else {
+        statusEl.textContent = "Not quite, try again! ⛄";
+        statusEl.className = "status incorrect";
+        return;  // stay on the same question
+      }
+
+      currentIndex++;
+      setTimeout(() => loadQuestion(currentIndex), 900);
+    }
+
+    function skipQuestion() {
+      if (lockingReveal) return; // already moving on
+
+      statusEl.textContent = "Question skipped. No present opened. 🎁";
+      statusEl.className = "status skipped";
+
+      currentIndex++;
+      setTimeout(() => loadQuestion(currentIndex), 700);
+    }
+
+    skipBtn.addEventListener("click", skipQuestion);
+
+    // Start quiz
+    loadQuestion(currentIndex);
+  </script>
+
+</body>
+</html>
